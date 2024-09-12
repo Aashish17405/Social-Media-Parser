@@ -14,7 +14,7 @@ const main = async () => {
     const page = await browser.newPage();
 
     // Set longer timeouts for page.goto and waitForNavigation
-    await page.goto(url + `/login`, { waitUntil: "networkidle2", timeout: 60000 });
+    await page.goto(url + "/login", { waitUntil: "networkidle2", timeout: 60000 });
 
     // Click the "Login/Register" button
     await page.waitForSelector('button[class*="mint-btn-default"]', { timeout: 10000 });
@@ -62,10 +62,11 @@ const main = async () => {
       const pinFields = await page.$$('input.otpinput88confidential');
 
       if (pinFields.length === 4) {
-        await pinFields[0].type(process.env.GROW_PIN[0]);
-        await pinFields[1].type(process.env.GROW_PIN[1]);
-        await pinFields[2].type(process.env.GROW_PIN[2]);
-        await pinFields[3].type(process.env.GROW_PIN[3]);
+        // Type the pin '0405' into the input fields
+        await pinFields[0].type('1');
+        await pinFields[1].type('2');
+        await pinFields[2].type('8');
+        await pinFields[3].type('9');
 
         console.log("PIN 0405 has been entered.");
       } else {
@@ -75,28 +76,35 @@ const main = async () => {
     } catch (error) {
       console.log("No OTP detected or error in OTP entry, continuing login process...");
     }
-
-    // Add delay to ensure processing time before taking a screenshot
     await wait(4000);
     await page.screenshot({ path: 'Growwdashboard.png', fullPage: true });
 
-    await page.goto(url + `/stocks/user/investments`, { waitUntil: "networkidle2"});
-    await wait(6000);
-    // Taking screenshot of the investments page
-    await page.screenshot({ path: 'GrowwSInvestments.png', fullPage: true });
-    await page.goto(url + `/mutual-funds/user/investments`, { waitUntil: "networkidle2" });
-    await wait(6000);
-    // Taking screenshot of the investments page
-    await page.screenshot({ path: 'GrowwMFInvestments.png', fullPage: true });
-
+    await wait(1000);
+    await page.waitForSelector('.loggedin-header-left-nav a[href="/stocks/user/investments"]', { timeout: 10000 });
+    await page.click('.loggedin-header-left-nav a[href="/stocks/user/investments"]');
+    await wait(2000);
+    await page.screenshot({ path: 'GrowwInvestments.png', fullPage: true });
+    await wait(1000);
+    await page.waitForSelector('.valign-wrapper.dashboardTabsText.bodyXLarge');
+    await page.evaluate(() => {
+        const elements = Array.from(document.querySelectorAll('.valign-wrapper.dashboardTabsText.bodyXLarge'));
+        const mutualFundsTab = elements.find(el => el.textContent.includes('Mutual Funds'));
+        if (mutualFundsTab) {
+            mutualFundsTab.click();
+        }
+    });
+    await wait(2000);
+    // await page.goto(url + "/mutual-funds/user/investments", { waitUntil: "networkidle2", timeout: 60000 });
+    // await wait(2000);
+    await page.screenshot({ path: 'GrowwMutualFunds.png', fullPage: true });
   } catch (error) {
     console.error("Error occurred:", error);
   } finally {
     if (browser) {
-      await browser.close();
+      await browser.close(); // Close the browser after execution
     }
     console.log("Script completed. Exiting now.");
-    process.exit(0);
+    process.exit(0); // Exit the script
   }
 };
 

@@ -20,6 +20,7 @@ const askQuestion = (query) => {
 
 const main = async () => {
   let browser;
+  console.log(process.env.FB_USERNAME);
 
   try {
     // Launch browser with notification permissions set to "denied"
@@ -37,9 +38,8 @@ const main = async () => {
     await page.type('input[name="email"]', process.env.FB_USERNAME);
     await page.waitForSelector('input[name="pass"]');
     await page.type('input[name="pass"]', process.env.FB_PASSWORD);
-    await wait(1000);
+    await wait(500);
     await page.click('button[name="login"]');
-    await wait(5000);
 
     // Wait for potential 2FA prompt
     await page.waitForNavigation({ waitUntil: "networkidle2" });
@@ -54,53 +54,27 @@ const main = async () => {
       await page.type(twoFaSelector, twoFaCode);
       await page.click('button[name="checkpoint_submit_button"]');
       await page.waitForNavigation({ waitUntil: "networkidle2" });
-
-      // After entering the 2FA code, check if the "Trust This Device" prompt appears
-      const trustDeviceSelector = 'input[name="name_action_selected"]'; // Selector for "Trust This Device"
-      const trustDeviceExists = await page.$(trustDeviceSelector);
-
-      if (trustDeviceExists) {
-        console.log("Trust this device option found, selecting it...");
-        await page.click(trustDeviceSelector); // Click the checkbox or radio button to trust the device
-        await page.click('button[name="checkpoint_submit_button"]'); // Submit the form to confirm
-        await page.waitForNavigation({ waitUntil: "networkidle2" });
-        console.log("Device trusted.");
-      } else {
-        console.log("No 'Trust This Device' prompt appeared.");
-      }
     }
 
-    // Screenshot of the home page
-    await wait(4000);
+    await wait(500);
     await page.screenshot({ path: 'fb_homepage.png', fullPage: true });
     console.log("Screenshot saved as fb_homepage.png");
 
-    // Navigate to Profile Page
     await page.goto('https://www.facebook.com/me', { waitUntil: "networkidle2" });
 
-    // Wait for a different selector on the profile page
-    try {
-      await page.waitForSelector('div[data-pagelet="ProfileTimeline"]');
-    } catch (error) {
-      console.warn("Profile timeline not immediately available. Proceeding anyway.");
-    }
 
-    await wait(2000);
+    await wait(500);
 
-    // Screenshot of the profile page
     await page.screenshot({ path: 'fb_profilepage.png', fullPage: true });
     console.log("Screenshot saved as fb_profilepage.png");
+      await page.goto("https://www.facebook.com/messages/t", { waitUntil: "networkidle2" });
+      console.log("Navigated to the Messenger section");
+      await wait(500);
+      await page.waitForSelector('div[role="row"]', { timeout: 30000 });
 
-    // Navigate to Facebook Messenger
-    await page.goto("https://www.facebook.com/messages/t", { waitUntil: "networkidle2" });
-    console.log("Navigated to the Messenger section");
-    await wait(1000);
-    await page.waitForSelector('div[role="row"]', { timeout: 30000 });
-
-    // Extract recent chat usernames
     const recentChats = await page.evaluate(() => {
       const chatItems = document.querySelectorAll('div[role="row"]');
-      return Array.from(chatItems).slice(0, 5).map(item => { // Adjust the number to get more or fewer recent usernames
+      return Array.from(chatItems).slice(0, 5).map(item => { 
         const usernameElement = item.querySelector('span.x1lliihq.x193iq5w.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft.xh894vf');
         return usernameElement ? usernameElement.textContent.trim() : 'Unknown';
       });
@@ -111,13 +85,12 @@ const main = async () => {
     recentChats.forEach((username, index) => {
       console.log(`${index + 1}. ${username}`);
     });
-
-    // Click on a specific person's chat
-    const chatWithPersonClicked = await page.evaluate(() => {
+     // Click on a specific person's chat
+     const chatWithPersonClicked = await page.evaluate(() => {
       const chatItems = document.querySelectorAll('div[role="row"]');
       for (const item of chatItems) {
         const usernameElement = item.querySelector('span.x1lliihq.x193iq5w.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft');
-        if (usernameElement && usernameElement.textContent.trim() === "Kavade Anjali") { // Change this to the specific username
+        if (usernameElement && usernameElement.textContent.trim() === "Samantha") {   // Change this to the specific username
           item.click();
           return true;
         }
@@ -128,8 +101,9 @@ const main = async () => {
     await wait(1000);
 
     if (chatWithPersonClicked) {
+      console.log("Successfully clicked on the chat with Samantha");
       await page.waitForSelector('div[role="row"]', { timeout: 30000 });
-      console.log("Chat with Kavade Anjali is now open");
+      console.log("Chat with samantha is now open");
 
       // Extract chat messages
       const messages = await page.evaluate(() => {
@@ -137,7 +111,7 @@ const main = async () => {
         return Array.from(messageRows).map(row => {
           const senderElement = row.querySelector('h5 span.xzpqnlu, h4 span.xzpqnlu');
           const contentElement = row.querySelector('div[dir="auto"]');
-          let sender = 'Kavade Anjali';
+          let sender = 'Samantha';
           let content = '';
           if (senderElement) {
             sender = senderElement.textContent.trim();
@@ -161,8 +135,12 @@ const main = async () => {
       });
 
     } else {
-      console.log("Couldn't find a chat with Kavade Anjali");
+      console.log("Couldn't find a chat with Samantha");
     }
+
+    // await new Promise(resolve => {}); // Keep the browser open
+    console.log("Thank you! See you again.");
+
 
   } catch (error) {
     console.error("Error occurred:", error);

@@ -21,35 +21,35 @@ const main = async () => {
     await page.type('input[name="username"]', process.env.USERNAME1);
     await page.waitForSelector('input[name="password"]');
     await page.type('input[name="password"]', process.env.PASSWORD);
-    await wait(2000);
+    await wait(500);
     await page.click('button[type="submit"]');
 
     await page.waitForNavigation({ waitUntil: "networkidle2" });
 
     // Check for Two-Factor Authentication prompt
     let otpRequired = false;
-    try {
-      await page.waitForSelector('input[name="verificationCode"]', { timeout: 5000 }); // OTP field for 2FA
-      otpRequired = true;
-      console.log("2FA is enabled. Please enter the OTP sent to your mobile device in the browser window.");
+    // try {
+    //   await page.waitForSelector('input[name="verificationCode"]', { timeout: 5000 }); // OTP field for 2FA
+    //   otpRequired = true;
+    //   console.log("2FA is enabled. Please enter the OTP sent to your mobile device in the browser window.");
       
       
-      await page.waitForFunction(
-        () => !document.querySelector('input[name="verificationCode"]'), 
-        { timeout: 60000 } 
-      );
-      console.log("OTP entered successfully, continuing...");
-    } catch (error) {
-      console.log("No 2FA detected, continuing login process...");
-    }
+    //   await page.waitForFunction(
+    //     () => !document.querySelector('input[name="verificationCode"]'), 
+    //     { timeout: 60000 } 
+    //   );
+    //   console.log("OTP entered successfully, continuing...");
+    // } catch (error) {
+    //   console.log("No 2FA detected, continuing login process...");
+    // }
 
     
-    if (otpRequired) {
-      await page.waitForNavigation({ waitUntil: "networkidle2" }); 
-    }
+    // if (otpRequired) {
+    //   await page.waitForNavigation({ waitUntil: "networkidle2" }); 
+    // }
 
     try {
-      await page.waitForSelector('div[role="button"][tabindex="0"]', { timeout: 5000 });
+      await page.waitForSelector('div[role="button"][tabindex="0"]', { timeout: 1000 });
       await page.click('div[role="button"][tabindex="0"]');
     } catch (error) {
       console.log("Popup 1 appeared and handled.");
@@ -71,8 +71,9 @@ const main = async () => {
     }
 
     await wait(2000);
+    
     await page.screenshot({ path: '1stpage.png', fullPage: true });
-    await wait(2000);
+    await wait(300);
     await page.goto(`https://www.instagram.com/${process.env.USERNAME1}/`, { waitUntil: "networkidle2" });
     await page.waitForSelector('header section');
 
@@ -81,7 +82,7 @@ const main = async () => {
 
     await page.goto("https://www.instagram.com/direct/inbox/", { waitUntil: "networkidle2" });
     console.log("Navigated to the chat section");
-    await wait(1000);
+    await wait(800);
     await page.waitForSelector('div[role="listitem"]', { timeout: 30000 });
 
     const recentChats = await page.evaluate(() => {
@@ -120,7 +121,7 @@ const main = async () => {
           const chatBox = document.querySelector('div[role="grid"]');
           chatBox.scrollTo(0, chatBox.scrollHeight);
         });
-        await wait(2000);
+        await wait(500);
       };
 
       let previousHeight;
