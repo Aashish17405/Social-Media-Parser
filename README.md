@@ -5,10 +5,10 @@
 <p align="center"><em>Automate social media data extraction with ease</em></p>
 
 <p align="center">
-	<img src="https://img.shields.io/github/license/Abhiyantrana-Navonmesakah/SocialMedia-parser?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
-	<img src="https://img.shields.io/github/last-commit/Abhiyantrana-Navonmesakah/SocialMedia-parser?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-	<img src="https://img.shields.io/github/languages/top/Abhiyantrana-Navonmesakah/SocialMedia-parser?style=default&color=0080ff" alt="repo-top-language">
-	<img src="https://img.shields.io/github/languages/count/Abhiyantrana-Navonmesakah/SocialMedia-parser?style=default&color=0080ff" alt="repo-language-count">
+	<img src="https://img.shields.io/github/license/Aashish17405/Social-Media-Parser?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
+	<img src="https://img.shields.io/github/last-commit/Aashish17405/Social-Media-Parser?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+	<img src="https://img.shields.io/github/languages/top/Aashish17405/Social-Media-Parser?style=default&color=0080ff" alt="repo-top-language">
+	<img src="https://img.shields.io/github/languages/count/Aashish17405/Social-Media-Parser?style=default&color=0080ff" alt="repo-language-count">
 </p>
 
 ---
@@ -65,19 +65,19 @@ Media-parser/
 		<blockquote>
 			<table>
 			<tr>
-				<td><b><a href='https://github.com/Abhiyantrana-Navonmesakah/SocialMedia-Parser/blob/master/fb.js'>fb.js</a></b></td>
+				<td><b><a href='https://github.com/Aashish17405/Social-Media-Parser/blob/master/fb.js'>fb.js</a></b></td>
 				<td><code>❯ facebook</code></td>
 			</tr>
 			<tr>
-				<td><b><a href='https://github.com/Abhiyantrana-Navonmesakah/SocialMedia-Parser/blob/master/TwitAuto.js'>TwitAuto.js</a></b></td>
+				<td><b><a href='https://github.com/Aashish17405/Social-Media-Parser/blob/master/TwitAuto.js'>TwitAuto.js</a></b></td>
 				<td><code>❯ Twitter</code></td>
 			</tr>
 			<tr>
-				<td><b><a href='https://github.com/Abhiyantrana-Navonmesakah/SocialMedia-Parser/blob/master/GrowAuto.js'>GrowAuto.js</a></b></td>
+				<td><b><a href='https://github.com/Aashish17405/Social-Media-Parser/blob/master/GrowAuto.js'>GrowAuto.js</a></b></td>
 				<td><code>❯ Groww</code></td>
 			</tr>
 			<tr>
-				<td><b><a href='https://github.com/Abhiyantrana-Navonmesakah/SocialMedia-Parser/blob/master/InstaAuto.js'>InstaAuto.js</a></b></td>
+				<td><b><a href='https://github.com/Aashish17405/Social-Media-Parser/blob/master/InstaAuto.js'>InstaAuto.js</a></b></td>
 				<td><code>❯ Instagram</code></td>
 			</tr>
 			</table>
@@ -117,14 +117,14 @@ echo 'INSERT-INSTALL-COMMAND-HERE'
 
 ##  Contributing
 
-- **💬 [Join the Discussions](https://github.com/Abhiyantrana-Navonmesakah/SocialMedia-Parser/discussions)**: Share your insights, provide feedback, or ask questions.
-- **🐛 [Report Issues](https://github.com/Abhiyantrana-Navonmesakah/SocialMedia-Parser/issues)**: Submit bugs found or log feature requests for the `SocialMedia-Parser` project.
-- **💡 [Submit Pull Requests](https://github.com/Abhiyantrana-Navonmesakah/SocialMedia-Parser/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+- **💬 [Join the Discussions](https://github.com/Aashish17405/Social-Media-Parser/discussions)**: Share your insights, provide feedback, or ask questions.
+- **🐛 [Report Issues](https://github.com/Aashish17405/Social-Media-Parser/issues)**: Submit bugs found or log feature requests for the `SocialMedia-Parser` project.
+- **💡 [Submit Pull Requests](https://github.com/Aashish17405/Social-Media-Parser/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
 
 <details closed>
 <summary>Contributing Guidelines</summary>
 
-1. **Fork the Repository**: Start by forking the project repository to your github account.
+1. **Fork the Repository**: Start by forking the project repository to your GitHub account.
 2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
    ```sh
    git clone https://github.com/Abhiyantrana-Navonmesakah/SocialMedia-Parser
@@ -138,7 +138,7 @@ echo 'INSERT-INSTALL-COMMAND-HERE'
    ```sh
    git commit -m 'Implemented new feature x.'
    ```
-6. **Push to github**: Push the changes to your forked repository.
+6. **Push to Git Hub**: Push the changes to your forked repository.
    ```sh
    git push origin new-feature-x
    ```
